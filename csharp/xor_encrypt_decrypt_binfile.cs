@@ -31,10 +31,10 @@ namespace XorEncryptDecrypt
 
         static void Main(string[] args)
         {
-            if (args.Length != 3)
+            if (args.Length != 2)
             {
-                Console.WriteLine("Error: Please provide 1) the path to the binary file to encrypt, 2) the encryption/decryption key, and 3) the path to an output filename ending in '.bin'.");
-                Console.WriteLine("Usage: ./XorEncryptDecrypt.exe ./met.bin 'MyS3cr3tK3y' ./xor.bin");
+                Console.WriteLine("Error: Please provide 1) the path to the binary file to encrypt, and 2) the encryption/decryption key.");
+                Console.WriteLine("Usage: ./XorEncryptDecrypt.exe ./met.bin 'MyS3cr3tK3y'");
                 Environment.Exit(1);
             }
             if (!File.Exists(args[0]))
@@ -49,13 +49,18 @@ namespace XorEncryptDecrypt
             // Get encryption key
             string key = args[1];
 
-            // Perform XOR on code
+            // Perform XOR on code and write to files
             byte[] XordBytes = XorByteArray(codeBytes, key);
+            File.WriteAllBytes("out.bin", XordBytes);
+            Console.WriteLine("Encrypted binary written to out.bin");
+              
+            string csCode = "byte[] codeBytes = new byte[" + XordBytes.Length + "] " + "{ " + ByteArrayToString(XordBytes) + " };";
+            File.WriteAllText("out.cs", csCode);
+            Console.WriteLine("Encrypted byte[] C# code written to out.cs");
 
-            // Write XORd code to file
-            File.WriteAllBytes(args[2], XordBytes);
-            Console.WriteLine("Encrypted binary written to: {0}", args[2]);
-            Console.WriteLine("byte[] codeBytes = new byte[{0}] {1}", XordBytes.Length, "{ " + ByteArrayToString(XordBytes) + " };");
+            string b64String = "string b64String = \"" + Convert.ToBase64String(XordBytes) + "\";";
+            File.WriteAllText("out.txt", b64String);
+            Console.WriteLine("Base64-encoded encrypted byte[] C# code written to out.txt");
         }
     }
 }
